@@ -2,6 +2,9 @@
 const express = require('express')
 const app = express()
 
+const db = require('./models')
+const Restaurant = db.Restaurant
+
 // ----- define relative variables -----
 const port = 3000
 
@@ -21,7 +24,8 @@ app.post('/restaurants/', (req, res) => {
 
 // read restaurant
 app.get('/restaurants', (req, res) => {
-  res.send('read all restaurants.')
+  return Restaurant.findAll({ raw: true })
+    .then(restaurant => res.send(restaurant))
 })
 
 app.get('/restaurants/:id', (req, res) => {
