@@ -2,6 +2,11 @@
 const express = require('express')
 const app = express()
 
+const {engine} = require('express-handlebars')
+app.engine('hbs', engine({defaultLayout: 'main', extname: '.hbs'}))
+app.set('view engine', 'hbs')
+app.set('views', './views')
+
 const db = require('./models')
 const Restaurant = db.Restaurant
 
@@ -10,7 +15,7 @@ const port = 3000
 
 // ----- define routes -----
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.render('index')
 })
 
 // create restaurant
