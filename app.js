@@ -14,9 +14,7 @@ const Restaurant = db.Restaurant
 const port = 3000
 
 // ----- define routes -----
-app.get('/', (req, res) => {
-  res.render('index')
-})
+app.use(express.static('public'))
 
 // create restaurant
 app.get('/restaurants/new', (req, res) => {
@@ -28,9 +26,10 @@ app.post('/restaurants/', (req, res) => {
 })
 
 // read restaurant
-app.get('/restaurants', (req, res) => {
+app.get('/', (req, res) => {  // modify route "/restaurants" to "/" to take this page as index page
   return Restaurant.findAll({ raw: true })
-    .then(restaurant => res.send(restaurant))
+    .then(restaurants => res.render('index', {restaurants}))
+    .catch(error => res.status(422).json(error))
 })
 
 app.get('/restaurants/:id', (req, res) => {
