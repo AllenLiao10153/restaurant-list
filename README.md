@@ -21,7 +21,7 @@
 1. 開啟終端機 (Terminal)，cd 至存放本專案的資料夾，執行以下指令將本專案 clone 至本機電腦。
 
 ```
-git clone https://github.com/AllenLiao10153/restaurant-list.git
+git clone https://github.com/allenliao0119/restaurant-list.git
 ```
 
 2. 進入此專案資料夾
