@@ -7,16 +7,22 @@ app.engine('hbs', engine({defaultLayout: 'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
+const methodOverride = require('method-override')
+
 const db = require('./models')
 const { raw } = require('mysql2')
+const restaurant = require('./models/restaurant')
 const Restaurant = db.Restaurant
+
 
 // ----- define relative variables -----
 const port = 3000
 
+
 // ----- define routes -----
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 
 // create restaurant
 app.get('/restaurants/new', (req, res) => {
@@ -50,17 +56,23 @@ app.get('/restaurants/:id', (req, res) => {
 
 // update restaurant
 app.get('/restaurants/:id/edit', (req, res) => {
-  res.send(`restaurant: ${req.params.id} edit page.`)
+  const id = req.params.id
+  return Restaurant.findByPk(id, {raw: true})
+    .then(restaurant => res.render('edit', {restaurant}))
 })
 
 app.put('/restaurants/:id', (req, res) => {
-  res.send(`restaurant: ${req.params.id} has been modified.`)
+  const id = req.params.id
+  const restaurant = req.body
+  return Restaurant.update(restaurant, {where: {id}})
+    .then(() => res.redirect(`/restaurants/${id}`))
 })
 
 // delete restaurant
 app.delete('/restaurants/:id', (req, res) => {
   res.send(`restaurant: ${req.params.id} has been deleted.`)
 })
+
 
 // ----- start to listen on port -----
 app.listen(port, () => {
