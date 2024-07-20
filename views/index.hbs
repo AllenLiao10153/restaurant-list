@@ -25,7 +25,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
-      <div class="row row-cols-sm-3">
+      <div class="row row-cols-sm-3 gy-5">
         {{#each restaurants}}
         <div class="col">
           <div class="row">
@@ -50,8 +50,11 @@
           </div>
           <div class="row mb-3">
             <div class="col d-flex justify-content-end align-content-center">
-              <a href="/restaurants/{{this.id}}/edit" class="mx-2">Edit</a>
-              <a href="/restaurants/{{this.id}}" class="mx-2">Detail</a>
+              <a href="/restaurants/{{this.id}}/edit" class="mx-2 p-1" style="line-height: initial;">Edit</a>
+              <a href="/restaurants/{{this.id}}" class="mx-2 p-1" style="line-height: initial;">Detail</a>
+              <form action="/restaurants/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit">Delete</button>
+              </form>
             </div>
           </div>
         </div>
