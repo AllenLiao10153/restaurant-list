@@ -16,14 +16,18 @@ const port = 3000
 
 // ----- define routes -----
 app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}))
 
 // create restaurant
 app.get('/restaurants/new', (req, res) => {
-  res.send('create page.')
+  res.render('new')
 })
 
 app.post('/restaurants/', (req, res) => {
-  res.send('restaurant has been created.')
+  const restaurant = req.body
+  console.log(restaurant)
+  return Restaurant.create(restaurant)
+    .then(() => res.redirect('/'))
 })
 
 // read restaurant
